@@ -1,0 +1,12 @@
+---
+#Default values for installation 
+odoo_user: odoo
+odoo_home: /{{odoo_user}}
+odoo_home_ext: /{{odoo_user}}/{{odoo_user}}-server
+odoo_port: 8069
+odoo_superadmin: admin
+odoo_config: "{{odoo_user}}-server"
+is_enterprice: false
+odoo_version: 12.0
+wkhtmltopdf_x64_url: https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox_0.12.5-1.trusty_amd64.deb
+wkhtmltopdf_x32_url: https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox_0.12.5-1.trusty_i386.deb

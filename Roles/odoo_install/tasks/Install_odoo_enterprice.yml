@@ -1,0 +1,43 @@
+---
+- name: Install odoo Enterprice  
+  block:
+    - name: Create symlink for node
+      command: ln -s /usr/bin/nodejs /usr/bin/node
+
+    - name: Create enterprise directories
+      file:
+        path: "{{ odoo_home }}/enterprise"
+        state: directory
+        owner: "{{ odoo_home }}"
+        group: "{{ odoo_home }}"
+        mode: '0750'
+
+    - name: Install enterprise code
+      git:
+        repo: https://www.github.com/odoo/enterprise
+        dest: "{{ odoo_home }}/enterprise/addons"
+        version: "{{ odoo_version }}"
+        depth: 1
+
+    - name: Install enterprise libraries
+      pip:
+        name:
+        - num2words
+        - ofxparse
+
+    - name: Install less
+      npm:
+        name: less
+        global: true
+
+    - name: Install less-plugin-clean-css
+      npm:
+        name: less-plugin-clean-css
+        global: true
+  when: is_enterprice == true
+
+- name: Add addons path to server config file Enterprice
+  lineinfile:
+    path: "/etc/{{ odoo_config }}.conf"
+    line: "addons_path={{ odoo_home }}/enterprise/addons,{{ odoo_home_ext }}/addons"
+  when: is_enterprice == true

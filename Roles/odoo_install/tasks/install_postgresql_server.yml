@@ -1,0 +1,12 @@
+---
+- name: Install PostgreSQL Server
+  ansible.builtin.apt:
+    name: postgresql
+    state: present
+
+- name: Creating the ODOO PostgreSQL User 
+  become: true
+  become_user: postgres
+  community.postgresql.postgresql_user:
+    name: "{{ odoo_user }}"
+    role_attr_flags: SUPERUSER

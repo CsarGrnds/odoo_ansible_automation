@@ -1,0 +1,28 @@
+---
+- name: Create Odoo group
+  ansible.builtin.group:
+    name: "{{ odoo_user }}"
+    state: present
+
+- name: Create Odoo user
+  ansible.builtin.user:
+    name: "{{ odoo_user }}"
+    system: yes
+    shell: /bin/bash
+    home: "{{ odoo_home }}"
+    group: "{{ odoo_user }}"
+    state: present
+
+- name: Add Odoo user to sudo group
+  ansible.builtin.user:
+    name: "{{ odoo_user }}"
+    groups: sudo
+    append: yes
+    state: present
+
+- name: Create log directory
+  ansible.builtin.file:
+    path: "/var/log/{{ odoo_user }}"
+    state: directory
+    owner: "{{ odoo_user }}"
+    group: "{{ odoo_user }}"

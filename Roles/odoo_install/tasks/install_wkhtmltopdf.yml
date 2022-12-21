@@ -1,0 +1,25 @@
+---
+- name: Install gdebi
+  apt:
+    name: gdebi
+    state: present
+
+- name: Download wkhtmltopdf
+  ansible.builtin.get_url:
+    url: "{{ wkhtmltopdf_x64_url }}"
+    dest: /tmp/odoo
+
+- name: Install wkhtmltopdf
+  command: "gdebi --n  /tmp/odoo/{{ wkhtmltopdf_x64_url | basename }} "
+
+- name: Create symlinks for wkhtmltopdf
+  file:
+    src: /usr/local/bin/wkhtmltopdf
+    dest: /usr/bin/wkhtmltopdf
+    state: link
+
+- name: Create symlinks for wkhtmltoimage
+  file:
+    src: /usr/local/bin/wkhtmltoimage
+    dest: /usr/bin/wkhtmltoimage
+    state: link

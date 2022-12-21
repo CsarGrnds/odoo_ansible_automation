@@ -1,0 +1,37 @@
+---
+- name: Install Odoo
+  ansible.builtin.git:
+    repo: https://www.github.com/odoo/odoo
+    dest: "{{ odoo_home_ext }}"
+    version: "{{ odoo_version }}"
+    depth: 1
+
+- name: Create custom module directory
+  ansible.builtin.file:
+    path: "{{ odoo_home }}/custom"
+    state: directory
+    owner: "{{ odoo_user }}"
+    group: "{{ odoo_user }}"
+    recurse: true
+
+- name: Create addons directory
+  ansible.builtin.file:
+    path: "{{ odoo_home }}/custom/addons"
+    state: directory
+    owner: "{{ odoo_user }}"
+    group: "{{ odoo_user }}"
+    recurse: true
+
+- name: Create Configuration file
+  ansible.builtin.template:
+    src: odoo-server.conf
+    dest: /etc/{{ odoo_config }}.conf
+    owner: "{{ odoo_user }}"
+    group: "{{ odoo_user }}"
+    mode: '0640'
+
+- name: Create Start file
+  ansible.builtin.template:
+    src: start.sh
+    dest: "{{ odoo_home_ext }}/start.sh"
+    mode: '0755'

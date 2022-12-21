@@ -1,0 +1,38 @@
+---
+# tasks file for odoo_install
+- name: Update Server
+  ansible.builtin.include_tasks: update_server.yml
+
+- name: Install PostgreSQL Server
+  ansible.builtin.include_tasks: install_postgresql_server.yml
+
+- name: Install dependencies
+  ansible.builtin.include_tasks: install_dependencies.yml
+
+- name: Install WKHTMLTOPDF
+  ansible.builtin.include_tasks: install_wkhtmltopdf.yml
+
+- name: Create Odoo User
+  ansible.builtin.include_tasks: create_odoo_system_user.yml
+
+- name: Install Odoo
+  ansible.builtin.include_tasks: Install_odoo.yml
+
+- name: Adding Odoo as a deamon (initscript)
+  ansible.builtin.include_tasks: add_odoo_deamon.yml
+
+- ansible.builtin.debug:
+    msg:
+      - '-----------------------------------------------------------'
+      - 'Done! The Odoo server is up and running. Specifications:'
+      - 'Port: {{ odoo_port }}'
+      - 'User service: {{ odoo_user }}'
+      - 'User PostgreSQL: {{ odoo_user }}'
+      - 'Code location: /{{ odoo_user }}'
+      - 'Addons folder: /{{ odoo_user }}/{{ odoo_config }}/addons/'
+      - 'Logs folder: /var/log/{{ odoo_user }}/{{ odoo_config }}.log'
+      - 'Configuration file: /etc/{{ odoo_config }}.conf '
+      - 'Start Odoo service: sudo service {{ odoo_config }} start'
+      - 'Stop Odoo service: sudo service {{ odoo_config }} stop'
+      - 'Restart Odoo service: sudo service {{ odoo_config }} restart'
+      - '-----------------------------------------------------------'

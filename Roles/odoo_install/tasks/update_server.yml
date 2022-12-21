@@ -1,0 +1,23 @@
+---
+- name: Install software-properties-common package
+  ansible.builtin.apt:
+    name: software-properties-common
+    state: present
+
+- name: Add universe repository
+  ansible.builtin.apt_repository:
+    repo: "deb http://archive.ubuntu.com/ubuntu {{ ansible_distribution_release }} universe"
+    state: present
+
+- name: Add xenial main repository
+  ansible.builtin.apt_repository:
+    repo: "deb http://mirrors.kernel.org/ubuntu/ xenial main"
+    state: present
+
+- name: Update package cache
+  ansible.builtin.apt:
+    update_cache: yes
+
+- name: Upgrade installed packages
+  ansible.builtin.apt:
+    upgrade: dist
