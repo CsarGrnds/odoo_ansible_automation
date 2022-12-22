@@ -1,3 +1,10 @@
+################################################################################
+# Ansible playbook to create a new Odoo instance for example: https://new_instance.example.com
+# Author: César Granados Carrillo a.k.a CsarGrnds
+#
+# Execute the playbook simply type: ansible-playbook create_instance.yml -e "system_name=new_instance name domain=example.com"
+#
+################################################################################
 ---
 - name: Odoo Operations Automation
   hosts: all
