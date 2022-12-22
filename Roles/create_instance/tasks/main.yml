@@ -1,0 +1,17 @@
+---
+# tasks file for create_ssl_certificate
+- name: Modify Odoo Config File
+  ansible.builtin.include_tasks: modify_config_file.yml
+
+- name: Create Odoo database
+  ansible.builtin.include_tasks: create_database.yml
+
+- name: Configure Apache
+  ansible.builtin.include_tasks: configure_apache.yml
+
+- name: Create SSL Certificate
+  ansible.builtin.include_tasks: create_ssl_certificate.yml
+
+- name: Fail or not to fail? 
+  debug:
+    msg: '{{ command_output.stdout_lines }}' 

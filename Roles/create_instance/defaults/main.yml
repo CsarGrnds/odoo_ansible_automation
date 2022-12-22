@@ -1,0 +1,11 @@
+---
+#Default values for installation 
+odoo_user: odoo
+odoo_home: /{{odoo_user}}
+odoo_home_ext: /{{odoo_user}}/{{odoo_user}}-server
+odoo_port: 8069
+odoo_superadmin: admin
+odoo_config: "{{odoo_user}}-server"
+
+apache_path: /etc/apache2/sites-available
+domain: teknixx.com

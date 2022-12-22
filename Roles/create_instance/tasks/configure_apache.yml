@@ -1,0 +1,29 @@
+---
+- name: Install Apache Server
+  ansible.builtin.apt:
+    name: apache2
+    state: present
+
+- name: Enable mod_proxy module
+  apache2_module:
+    name: proxy_http
+    state: present
+
+- name: Enable headers module
+  apache2_module:
+    name: headers
+    state: present
+
+- name: Enable rewrite module
+  apache2_module:
+    name: rewrite
+    state: present
+
+- name: Creating virtual host file...
+  template:
+    src: virtualhost.j2
+    dest: '{{ apache_path }}/{{ system_name }}.{{ domain }}.conf'
+
+- name: Enableling {{ system_name }} VirtualHost
+  command: a2ensite {{ system_name }}.{{ domain }}.conf
+  notify: Reloading apache service

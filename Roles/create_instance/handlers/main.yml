@@ -1,0 +1,13 @@
+---
+# handlers file for create_ssl_certificate
+- name: Restart Odoo service
+  ansible.builtin.service:
+    name: odoo-server
+    state: restarted
+
+- name: Reloading apache service
+  ansible.builtin.systemd:
+    name: apache2
+    state: reloaded
+
+

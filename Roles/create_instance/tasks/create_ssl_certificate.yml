@@ -1,0 +1,11 @@
+---
+- name: Install Apache and Certbot dependencies Server
+  ansible.builtin.apt:
+    name:
+      - certbot
+      - python-certbot-apache
+    state: present
+
+- name: Creating certificate for {{ system_name }}
+  command: certbot --apache -d {{ system_name }}.{{ domain }} --redirect -n --agree-tos --email support@teknixx.com
+  register: command_output

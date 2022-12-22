@@ -1,0 +1,10 @@
+---
+- name: Odoo Operations Automation
+  hosts: all
+  gather_facts: false
+  become: true
+
+  tasks:
+  - name: Create Odoo Instance
+    ansible.builtin.include_role:
+      name: create_instance

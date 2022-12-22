@@ -1,0 +1,27 @@
+---
+- name: Dump original database
+  shell: pg_dump test -U {{ odoo_user }} -f /tmp/dump_file.sql
+  register: dump_output
+  become: true
+  become_user: "{{ odoo_user }}"
+
+- name: Create new database
+  shell: createdb -T template0 -U {{ odoo_user }} {{ system_name }}
+  become: true
+  become_user: "{{ odoo_user }}"
+  ignore_errors: true
+
+- name: Restore dumped data into new database
+  shell: psql -U {{ odoo_user }} {{ system_name }} < /tmp/dump_file.sql
+  when: dump_output is succeeded
+  become: true
+  become_user: "{{ odoo_user }}"
+
+- name: Copy directory
+  copy:
+    src: /odoo/.local/share/Odoo/filestore/test/
+    dest: /odoo/.local/share/Odoo/filestore/{{ system_name }}/
+    remote_src: true
+    directory_mode:
+  become: true
+  become_user: "{{ odoo_user }}"

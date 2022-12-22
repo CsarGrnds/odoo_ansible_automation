@@ -1,0 +1,14 @@
+<VirtualHost *:80>
+        ServerName {{ system_name }}.{{ domain }}
+        ServerAlias {{ system_name }}.{{ domain }}
+
+        ProxyPass  / http://localhost:8069/
+        ProxyPassReverse  / http://localhost:8069/
+
+        Header add X-ODOO_DBFILTER "{{ system_name }}"
+        RequestHeader add X-ODOO_DBFILTER "{{ system_name }}"
+
+RewriteEngine on
+RewriteCond %{SERVER_NAME} ={{ system_name }}.{{ domain }}
+RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,NE,R=permanent]
+</virtualhost>
