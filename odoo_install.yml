@@ -1,16 +1,3 @@
-################################################################################
-# Ansible playbook for installing Odoo on Ubuntu 14.04, 15.04, 16.04 and 18.04 (could be used for other version too) 
-# Author: César Granados Carrillo a.k.a CsarGrnds
-#
-# This playbook is based on Yenthe Van Ginneken bash script that can be found here: https://github.com/Yenthe666/InstallScript
-#-------------------------------------------------------------------------------
-# This playbook will install Odoo on your Ubuntu server. It can install multiple Odoo instances
-# in one Ubuntu because of the different xmlrpc_ports
-#-------------------------------------------------------------------------------
-#
-# Execute the playbook simply type: ansible-playbook odoo_install.yml (It will run with the default values)
-#
-################################################################################
 ---
 - name: Install and configure Odoo
   hosts: all
